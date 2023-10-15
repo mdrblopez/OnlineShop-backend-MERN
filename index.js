@@ -111,12 +111,13 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// to get the user profile
+// to get the userInfo profile
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
   res.json(token);
 });
 
+//log out, userInfo to delete
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json("OK");
 });
@@ -125,6 +126,13 @@ app.post("/logout", (req, res) => {
 app.post("/delete", async (req, res) => {
   const { _id } = req.body;
   const deleteProduct = await Cart.deleteOne({ _id: _id });
+  res.json(deleteProduct);
+});
+
+//to remove a product by merchant
+app.post("/productdelete", async (req, res) => {
+  const { _id } = req.body;
+  const deleteProduct = await Post.deleteOne({ _id: _id });
   res.json(deleteProduct);
 });
 
@@ -163,4 +171,4 @@ app.get("/mycart", async (req, res) => {
 
 app.listen(4000);
 
-
+//"mongodb+srv://admin:Admin123456@cluster0.ro4ipbw.mongodb.net/spendee?retryWrites=true&w=majority"
